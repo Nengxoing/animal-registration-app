@@ -63,7 +63,7 @@ export default function AnimalExportViewPage() {
   return (
     <div className="container mx-auto bg-white">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">ລາຍການສົ່ງອອກສັດ</h1>
+        <h1 className="text-3xl font-bold text-gray-800">ລາຍການສົ່ງອອກ</h1>
         <Button
           onClick={handleBack}
           className="bg-gray-200 text-gray-700 hover:bg-gray-300 px-4 py-2 rounded-md"
@@ -80,7 +80,7 @@ export default function AnimalExportViewPage() {
       </div>
       
       <div className='space-y-2'>
-        <Label>ລາຍການສົ່ງອອກສັດ</Label>
+        <Label>ລາຍການສົ່ງອອກ</Label>
         <AnimalExportTable
           animalExports={animalExports}
         />

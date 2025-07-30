@@ -26,7 +26,7 @@ interface EditApplicationFormProps {
 export const EditApplicationForm: React.FC<EditApplicationFormProps> = ({
   register,
   control,
-  folders,
+  folders, 
   setValue,
   watch,
   handleSubmit,
@@ -47,7 +47,7 @@ export const EditApplicationForm: React.FC<EditApplicationFormProps> = ({
         <Input
           type="text"
           {...register("company.name")}
-          className="w-full border border-gray-100 shadow-md px-3 py-2"
+          className="w-full border border-gray-400 px-3 py-2"
           readOnly={true}
         />
       </div>
@@ -57,7 +57,7 @@ export const EditApplicationForm: React.FC<EditApplicationFormProps> = ({
         <Input
           type="text"
           {...register("company.businessCode")}
-          className="w-full border border-gray-100 shadow-md px-3 py-2"
+          className="w-full border border-gray-400 px-3 py-2"
           readOnly={true}
         />
       </div>
@@ -73,7 +73,7 @@ export const EditApplicationForm: React.FC<EditApplicationFormProps> = ({
               onValueChange={(value) => field.onChange(value)}
               value={field.value || ""}
             >
-              <SelectTrigger className="w-full border bg-white border-gray-100 shadow-md">
+              <SelectTrigger className="w-full border bg-white border-gray-400">
                 <SelectValue placeholder="ເລືອກແຟ້ມ" />
               </SelectTrigger>
               <SelectContent>
@@ -96,7 +96,7 @@ export const EditApplicationForm: React.FC<EditApplicationFormProps> = ({
         <Input
           type="text"
           {...register("folderBillNumber")}
-          className="w-full border border-gray-100 shadow-md px-3 py-2"
+          className="w-full border border-gray-400 px-3 py-2"
           readOnly={true}
         />
       </div>
@@ -106,7 +106,7 @@ export const EditApplicationForm: React.FC<EditApplicationFormProps> = ({
         <Input
           type="date"
           {...register("folderCreatedAt")}
-          className="w-full border border-gray-100 shadow-md px-3 py-2"
+          className="w-full border border-gray-400 px-3 py-2"
           readOnly={true}
         />
       </div>
@@ -116,7 +116,7 @@ export const EditApplicationForm: React.FC<EditApplicationFormProps> = ({
         <Input
           type="number"
           {...register("animalQuantity", { valueAsNumber: true })}
-          className="w-full border border-gray-100 shadow-md px-3 py-2"
+          className="w-full border border-gray-400 px-3 py-2"
           readOnly={true}
         />
       </div>
@@ -126,14 +126,14 @@ export const EditApplicationForm: React.FC<EditApplicationFormProps> = ({
         <Input
           type="date"
           {...register("folderUpdatedAt")}
-          className="w-full border border-gray-100 shadow-md px-3 py-2"
+          className="w-full border border-gray-400 px-3 py-2"
           readOnly={true}
         />
       </div>
 
       <div className="space-y-2">
         <Label className="block font-medium">ຈຳນວນສັດທີ່ຕ້ອງການສົ່ງອອກ</Label>
-        <div className="flex justify-between border bg-white border-gray-100 shadow-md items-center gap-2">
+        <div className="flex justify-between border bg-white border-gray-400 rounded-sm overflow-hidden items-center gap-2">
           <Controller
             name="animalForSend"
             control={control}

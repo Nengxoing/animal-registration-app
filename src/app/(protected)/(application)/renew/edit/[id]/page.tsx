@@ -64,7 +64,7 @@ export default function EditApplicationPage() {
       setModalState({
         show: true,
         title: 'ສຳເລັດ!',
-        message: data.message || 'ການສົ່ງອອກສັດສຳເລັດແລ້ວ.',
+        message: data.message || 'ການສົ່ງອອກສຳເລັດແລ້ວ.',
         type: 'success',
       });
     },
@@ -112,9 +112,9 @@ export default function EditApplicationPage() {
   if (isError || !application) {
     return <div className="text-red-500 text-center">ດຶງຂໍ້ມູນບໍ່ສຳເລັດ</div>;
   }
-
+ 
   return (
-    <div className="border border-gray-100 shadow-md rounded-sm space-y-6 p-4 max-w-2xl mx-auto">
+    <div className="border border-gray-400 rounded-sm space-y-6 p-4 max-w-2xl mx-auto">
       <p className="text-xl font-bold">ນຳສັດໃນຟາມອອກ</p>
       <EditApplicationForm
         register={register}

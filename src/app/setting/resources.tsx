@@ -78,7 +78,7 @@ export const resources: IResources[] = [
         icon: <Clipboard size={18} />,
       },
       {
-        title: "ສົ່ງອອກສັດ",
+        title: "ສົ່ງອອກ",
         subject: "renew",
         href: "/renew",
         icon: <RefreshCcw size={18} />,

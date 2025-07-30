@@ -55,7 +55,7 @@ export function ProfileCard({ profile, onSend }: ProfileCardProps) {
         </div> 
 
         {applicationId && (
-          <Button onClick={() => onSend?.(applicationId)}>ສົ່ງອອກສັດ</Button>
+          <Button onClick={() => onSend?.(applicationId)}>ສົ່ງອອກ</Button>
         )}
       </CardContent>
 
