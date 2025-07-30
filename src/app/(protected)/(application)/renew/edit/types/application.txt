@@ -1,0 +1,54 @@
+/* eslint-disable linebreak-style */
+// D:\Nengxiong\animal-registration-project\animalRegistrationWeb\src\types\application.ts
+
+export interface FolderDetail {
+    updatedAt: any;
+    billNumber(arg0: string, billNumber: any): unknown;
+    id: number;
+    code: string;
+    name: string;
+    officeId: number;
+    status: string;
+    createdAt: string;
+    number?: {
+        id: number;
+        number: string;
+        amount: number;
+        priceId: number;
+        folderId: number;
+        isAvailable: boolean;
+        createdAt: string;
+        updatedAt: string;
+        deletedAt: null | string;
+        officeId: number;
+        price?: {
+            id: number;
+            name: string;
+            price: number;
+            type: string;
+            code?: string;
+            duration?: string;
+            officeId?: number | null;
+            status?: boolean;
+            createdAt?: string;
+            updatedAt?: string;
+            deletedAt?: null | string;
+        };
+    }[];
+
+    folderPrice: {
+        amount: number;
+        priceId: number;
+        multiple: number;
+        totalPrice: string | number;
+        price: {
+            id: number;
+            name: string;
+            price: string | number;
+            type: string;
+        };
+        total?: string | number;
+    }[];
+    totalAmount?: string | number;
+    totalPrice?: string | number;
+}

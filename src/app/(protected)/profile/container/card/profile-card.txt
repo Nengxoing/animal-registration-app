@@ -1,0 +1,236 @@
+/* eslint-disable complexity */
+/* eslint-disable @typescript-eslint/naming-convention */
+
+import {
+  // Avatar,
+  // AvatarFallback,
+  // AvatarImage,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  // Tooltip,
+  // TooltipContent, 
+  // TooltipProvider,
+  // TooltipTrigger,
+} from "@/components/ui";
+import { MoreVertical, RefreshCcw, Printer } from "lucide-react";
+import { type IProfile } from "../../type";
+import { formatDate } from "@/lib/format-date";
+// import { getIdentityLabel } from "../../lib";
+import { useReactToPrint } from "react-to-print";
+import { useRef } from "react";
+// import { formatDateString } from "src/app/(protected)/(application)/renew/container/barcode";
+import Certificate from "./certificate";
+// import { IApplication } from "@/app/(protected)/(application)/application/type";
+
+// const ProfileDetail = ({ icon: Icon, label, value }: { icon: React.ComponentType, label: string, value?: string | number }) => (
+//   <div className="flex items-center gap-2">
+//     <Icon />
+//     <span>{value || label}</span>
+//   </div>
+// );
+
+interface DropdownMenuComponentProps {
+  onEdit?: (profile: number) => void;
+  onDelete?: (profile: number) => void;
+  profileId: number;
+  onApplication?: (profile: number) => void;
+  onDocs: () => void;
+}
+
+const DropdownMenuComponent = ({ profileId, onApplication, onDocs }: DropdownMenuComponentProps) => (
+  <DropdownMenu>
+    <DropdownMenuTrigger asChild>
+      <Button variant="ghost" size="icon" className="h-8 w-8">
+        <MoreVertical className="h-4 w-4" />
+        <span className="sr-only">ປິດເມນູ</span>
+      </Button>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent align="end">
+      {onApplication && (<DropdownMenuItem
+        onClick={() => { onApplication?.(profileId); }}
+        className="flex items-center gap-2 text-sm "
+      >
+        <RefreshCcw className="h-4 w-4" />
+        ສົ່ງອອກສັດ
+      </DropdownMenuItem>)}
+      {onApplication && (
+        <DropdownMenuItem
+          className="flex items-center gap-2 text-sm "
+          onClick={() => onDocs()}
+        >
+          <Printer className="h-4 w-4 pront-btn" /> 
+          ອອກເອກະສານຢັ້ງຢືນ
+        </DropdownMenuItem>
+      )}
+    </DropdownMenuContent>
+  </DropdownMenu>
+);
+
+interface ProfileCardProps {
+  profile: IProfile;
+  onEdit?: (profile: number) => void;
+  onDelete?: (profile: number) => void;
+  onApplication?: (profile: number) => void;
+  renewable?: boolean
+}
+
+export function ProfileCard({ profile, onEdit, onDelete, onApplication, renewable = false }: ProfileCardProps) {
+
+  const farmName = `${profile?.application?.[0]?.company?.name || "-"}`;
+  const businessCode = `${profile?.application?.[0]?.company?.businessCode || "-"}`;
+  const folderName = `${profile?.application?.[0]?.folder?.name || "-"}`;
+  const billNumber = `${profile?.application?.[0]?.folder?.billNumber || "-"}`;
+  const barcode = `${profile?.barcode || "-"}`;
+  const createdAt = `${formatDate({ date: profile?.createdAt })}`
+  const updatedAt = `${formatDate({ date: profile?.createdAt })}`
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  // const imageSrc = profile?.image;
+  // const handlePrint = useReactToPrint({ contentRef })
+  return (
+    <Card className="w-full sm:w-96">
+      <CardHeader className="flex flex-row items-center gap-4">
+        {/* <div className="relative h-20 w-16 overflow-hidden rounded-sm">
+          <Avatar className="h-20 w-16 rounded-sm shadow-md">
+            <AvatarImage src={imageSrc} alt={firstName} />
+            <AvatarFallback className="text-2xl font-semibold">
+              {profile?.firstName?.[0] || ""}
+              {profile?.lastName?.[0] || ""}
+            </AvatarFallback>
+          </Avatar>
+        </div> */}
+        <div className="flex-1">
+          {/* <h2 className="text-2xl font-bold">{firstName}</h2> */}
+          <h2 className="text-2xl font-bold">ຊື່ຟາມ: <span className="font-normal">{farmName}</span></h2>
+        </div>
+        {/* {renewable && (
+          <DropdownMenuComponent onEdit={onEdit} onDelete={onDelete} profileId={profile?.id} onApplication={onApplication} onDocs={() => handlePrint()}/>
+        )} */}
+      </CardHeader>
+      <CardContent className="grid gap-4">
+        <div className="grid gap-3">
+          {/* <ProfileDetail icon={ScanBarcode} label="ບາໂຄດ" value={profile?.barcode} />
+          <ProfileDetail icon={FileCode} label="ເອກທິຟອມ" value={profile?.applicationNumber} />
+          <ProfileDetail icon={User} label="ເພດ" value={profile?.gender} />
+          <ProfileDetail icon={Home} label="ຫົວໜ່ວຍ" value={profile?.application?.[0]?.company?.name || "-"} />
+          <ProfileDetail icon={IdCard} label="Profile ID" value={profile?.application?.[0]?.profileId?.toString() || "ບໍ່ມີ"} /> */}
+          
+          <strong>ເລກທີ່ຫົວໜ່ວຍທຸລະກິດ: <span className="font-normal">{businessCode}</span></strong>
+          <strong>ຊື່ແຟ້ມ: <span className="font-normal">{folderName}</span></strong>
+          <strong>ເລກທີ່ແຟ້ມ: <span className="font-normal">{billNumber}</span></strong>
+          <strong>ບາໂຄດ: <span className="font-normal">{barcode}</span></strong>
+
+          {/* <strong>ເອກທິຟອມ: <span className="font-normal">{profile?.applicationNumber}</span></strong> */}
+          {/* <strong>ເພດ: <span className="font-normal">{profile?.gender}</span></strong> */}
+          {/* <strong>ຫົວໜ່ວຍທຸລະກິດ: <span className="font-normal">{profile?.application?.[0]?.company?.name || "-"}</span></strong> */}
+          {/* <strong>Profile ID: <span className="font-normal">{profile?.application?.[0]?.profileId?.toString() || "ບໍ່ມີ"}</span></strong> */}
+        </div>
+        <div className="flex justify-between">
+          <p>ວັນທີ່ສ້າງ: {createdAt}</p> - 
+          <p>ອັບເດດລ່າສຸດ: {updatedAt}</p>
+        </div>
+        <Button className="w-full font-medium">ສົ່ງອອກ</Button>
+        {/* <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger className="text-xs text-muted-foreground hover:text-foreground">
+              ແກ້ໄຂລ່າສຸດ: {formatDate({ date: profile?.updatedAt || "ບໍ່ມີວັນທີ່ອັບເດດ" })}
+            </TooltipTrigger>
+            <TooltipContent>
+              ວັນທີ່ສ້າງ: {formatDate({ date: profile?.createdAt || "ບໍ່ມີວັນທີ່ອັບເດດ" })}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider> */}
+      </CardContent>
+      <div className="hidden print:block">
+        <Certificate profileId={profile?.id} ref={contentRef} />
+      </div>
+    </Card>
+  );
+}
+
+
+
+
+
+/* eslint-disable complexity */
+/* eslint-disable @typescript-eslint/naming-convention */
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+} from "@/components/ui";
+import { type IProfile } from "../../type";
+import { formatDate } from "@/lib/format-date";
+import { useRef } from "react";
+import Certificate from "./certificate";
+import { useRouter } from "next/navigation";
+
+interface ProfileCardProps {
+  profile: IProfile;
+  onEdit?: (profile: number) => void;
+  onDelete?: (profile: number) => void;
+  onApplication?: (profile: number) => void;
+  renewable?: boolean
+}
+
+export function ProfileCard({ profile }: ProfileCardProps) {
+
+  const router = useRouter();
+
+  // const applicationId = profile?.application?.[0]?.id;
+  // console.log('applicationId', applicationId);
+
+  const farmName = `${profile?.application?.[0]?.company?.name || "-"}`;
+  const businessCode = `${profile?.application?.[0]?.company?.businessCode || "-"}`;
+  const folderName = `${profile?.application?.[0]?.folder?.name || "-"}`;
+  const billNumber = `${profile?.application?.[0]?.folder?.billNumber || "-"}`;
+  const barcode = `${profile?.barcode || "-"}`;
+  const createdAt = `${formatDate({ date: profile?.createdAt })}`
+  const updatedAt = `${formatDate({ date: profile?.createdAt })}`
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  return (
+    <Card className="w-full sm:w-96">
+      <CardHeader className="flex flex-row items-center gap-4">
+        <div className="flex-1">
+          <h2 className="text-2xl font-bold">ຊື່ຟາມ: <span className="font-normal">{farmName}</span></h2>
+        </div>
+      </CardHeader>
+      <CardContent className="grid gap-4">
+        <div className="grid gap-3">
+          <strong>ເລກທີ່ຫົວໜ່ວຍທຸລະກິດ: <span className="font-normal">{businessCode}</span></strong>
+          <strong>ຊື່ແຟ້ມ: <span className="font-normal">{folderName}</span></strong>
+          <strong>ເລກທີ່ແຟ້ມ: <span className="font-normal">{billNumber}</span></strong>
+          <strong>ບາໂຄດ: <span className="font-normal">{barcode}</span></strong>
+        </div>
+        <div className="flex justify-between">
+          <p>ວັນທີ່ສ້າງ: {createdAt}</p> - 
+          <p>ອັບເດດລ່າສຸດ: {updatedAt}</p>
+        </div>
+
+        <Button
+          className="w-full font-medium"
+          onClick={() => {
+            const applicationId = profile?.application?.[0]?.id;
+            if (applicationId) {
+              router.push(`/protected/(application)/renew/edit/${applicationId}`);
+            }
+          }}
+        >
+          ສົ່ງອອກ
+        </Button>
+
+      </CardContent>
+      <div className="hidden print:block">
+        <Certificate profileId={profile?.id} ref={contentRef} />
+      </div>
+    </Card>
+  );
+}

@@ -1,0 +1,40 @@
+/* eslint-disable linebreak-style */
+"use client";
+
+import { Spinner } from "@/components/ui/spinner";
+import { useEditApplication } from "../hooks/useEditApplication";
+import { EditApplicationForm } from "../components/EditApplicationForm";
+
+export default function EditApplicationPage() {
+  const {
+    application,
+    folders,
+    isLoading,
+    isError,
+    register,
+    control,
+    setValue,
+    watch,
+  } = useEditApplication();
+
+  if (isLoading) {
+    return <Spinner show size="large" />;
+  }
+
+  if (isError || !application) {
+    return <div className="text-red-500 text-center">ດຶງຂໍ້ມູນບໍ່ສໍາເລັດ</div>;
+  }
+
+  return (
+    <div className="border border-gray-100 shadow-md rounded-sm space-y-6 p-4 max-w-2xl mx-auto">
+      <p className="text-xl font-bold">ນຳສັດໃນຟາມອອກ</p>
+      <EditApplicationForm
+        register={register}
+        control={control}
+        folders={folders}
+        setValue={setValue}
+        watch={watch}
+      />
+    </div>
+  );
+}

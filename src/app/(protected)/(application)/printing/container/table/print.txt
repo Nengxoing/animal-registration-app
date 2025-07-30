@@ -1,0 +1,236 @@
+D:\Nengxiong\animal-registration-project\animalRegistrationWeb\src\app\(protected)\(application)\printing\container\print-view\[id]\page.tsx
+/* eslint-disable linebreak-style */
+// page.tsx - แก้ไข useReactToPrint
+"use client";
+
+import { useParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { apiClient } from "@/lib/axios";
+import { IApplication } from "../../../../application/type";
+import { Spinner } from "@/components/ui/spinner";
+import { Button } from "@/components/ui/button";
+import { Printer } from "lucide-react";
+import { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
+import { StayPermitCard } from "../../card";
+
+// ประเภทข้อมูลที่คาดว่าจะได้จาก backend
+interface BackendResponse {
+  status: string;
+  message: string;
+  result: IApplication;
+}
+
+// ดึงข้อมูลจาก API
+const fetchApplicationById = async (id: number): Promise<IApplication> => {
+  const data = await apiClient.get<BackendResponse>(`/application/${id}`);
+  if (data.status !== "ok") {
+    throw new Error(data.message || "Unexpected API status");
+  }
+
+  if (!data.result) {
+    throw new Error("No application data found in result.");
+  }
+
+  return data.result;
+};
+
+const PrintViewPage = () => {
+  const params = useParams();
+  const applicationId = Number(params?.id);
+  // สร้าง ref สำหรับส่วนที่จะพิมพ์
+  const printRef = useRef<HTMLDivElement>(null);
+
+  // Hook สำหรับการพิมพ์ - react-to-print v3.x
+  const handlePrint = useReactToPrint({
+    contentRef: printRef, // ใช้ contentRef สำหรับ v3.x
+    documentTitle: `Application-${applicationId}-Print`,
+    pageStyle: `
+      @page {
+        size: A4;
+        margin: 20mm;
+      }
+      @media print {
+        body {
+          -webkit-print-color-adjust: exact;
+        }
+        .print\\:hidden {
+          display: none !important;
+        }
+      }
+    `,
+    onBeforePrint: () => {
+      console.log('กำลังเตรียมพิมพ์...');
+      return Promise.resolve();
+    },
+    onAfterPrint: () => {
+      console.log('พิมพ์เสร็จสิ้น!');
+    },
+  });
+
+  if (isNaN(applicationId)) {
+    return <div className="text-center text-red-500">Invalid ID</div>;
+  }
+
+  const { data: application, isLoading, isError } = useQuery<IApplication, Error>({
+    queryKey: ["application", applicationId],
+    queryFn: () => fetchApplicationById(applicationId),
+    enabled: !!applicationId,
+  });
+
+  if (isLoading) {
+    return <Spinner show size="large" />;
+  }
+
+  if (isError) {
+    return <div className="text-center text-red-500">Error loading application data.</div>;
+  }
+
+  if (!application) {
+    return <div className="text-center">No application data found.</div>;
+  }
+
+  return (
+    <div className="flex flex-col items-center p-4">
+      {/* ปุ่มพิมพ์ จะถูกซ่อนเมื่อพิมพ์ */}
+      <div className="mb-4 print:hidden">
+        <Button onClick={handlePrint}>
+          <Printer className="mr-2 h-4 w-4" /> ພິມເອກະສານ
+        </Button>
+      </div>
+
+      {/* StayPermitCard ที่จะแสดงและถูกพิมพ์ */}
+      <div ref={printRef} className="max-w-5xl w-full">
+        <StayPermitCard application={application} />
+      </div>
+    </div>
+  );
+};
+
+export default PrintViewPage;
+
+D:\Nengxiong\animal-registration-project\animalRegistrationWeb\src\app\(protected)\(application)\printing\container\card.tsx
+"use client";
+
+import Image from "next/image";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { IApplication } from "../../application/type";
+import { formatDateString } from "./barcode";
+import { cn } from "@/lib/utils";
+import React from "react"; // Import React
+
+// เปลี่ยนเป็น React.forwardRef เพื่อให้คอมโพเนนต์สามารถรับ ref ได้
+export const StayPermitCard = React.forwardRef<HTMLDivElement, { application?: IApplication; className?: string }>(
+  ({ application, className }, ref) => { // รับ ref เป็น argument ที่สอง
+    if (!application) {
+      return <div className="text-center text-red-500">ບໍ່ມີຂໍ້ມູນຄໍາຮ້ອງ</div>;
+    }
+
+    const { profile, company, village, createdAt, applicationNumber } = application;
+
+    const getGenderLabel = (gender?: string) => {
+      switch (gender?.toLowerCase()) {
+        case "male":
+        case "m":
+          return "ຜູ້";
+        case "female":
+        case "f":
+          return "ແມ່";
+        default:
+          return "ບໍ່ລະບຸ";
+      }
+    };
+
+    const fullName = `${profile?.firstName || ""} ${profile?.lastName || ""}`;
+    const documentNumberDisplay = applicationNumber || "ບໍ່ມີຂໍ້ມູນ";
+    const companyOrVillage = company?.name || village?.villageLao || "ບໍ່ມີຂໍ້ມູນ";
+    const genderDisplay = getGenderLabel(profile?.gender);
+    const createdAtDisplay = formatDateString(createdAt);
+
+    return (
+      <Card
+        ref={ref}
+        className={cn(
+          "print:a4-container bg-white mx-auto text-black font-Phetsarath border border-gray-400 space-y-12 p-8 shadow-lg",
+          className,
+        )}
+        style={{ width: "210mm", minHeight: "297mm" }}
+      >
+        <CardHeader className="text-center space-y-2">
+          <h1 className="font-bold text-xl leading-tight">ສາທາລະນະລັດ ປະຊາທິປະໄຕ ປະຊາຊົນລາວ</h1>
+          <h1 className="font-bold text-xl leading-tight">ສັນຕິພາບ ເອກະລາດ ປະຊາທິປະໄຕ ເອກະພາບ ວັດທະນາຖາວອນ</h1>
+        </CardHeader>
+
+        <CardContent>
+          <main className="flex gap-12">
+            {/* Photo */}
+            <section className="flex flex-col items-center w-[120px] space-y-2">
+              <div className="w-[120px] h-[150px] border border-gray-400 flex items-center justify-center bg-gray-100">
+                {profile?.image ? (
+                  <Image
+                    src={profile.image}
+                    alt="ຮູບພາບບຸກຄົນ"
+                    width={120}
+                    height={150}
+                    unoptimized
+                    className="object-cover"
+                  />
+                ) : (
+                  <span className="text-xs text-gray-500 text-center px-2">ບໍ່ມີຮູບພາບ</span>
+                )}
+              </div>
+              <p className="font-semibold text-sm mb-2 text-center">ຮູບພາບ</p>
+            </section>
+
+            {/* Details */}
+            <section className="flex-1 text-[14pt] leading-snug">
+              <div className="mb-4">
+                <strong>ຊື່ ແລະ ນາມສະກຸນ:</strong>
+                <p className="font-TimesNewRoman uppercase">{fullName}</p>
+              </div>
+
+              <div className="mb-4">
+                <strong>ເລກທີເອກະສານ:</strong>
+                <p className="font-TimesNewRoman">{documentNumberDisplay}</p>
+              </div>
+
+              <div className="mb-4">
+                <strong>ຫົວໜ່ວຍທຸລະກິດ ຫຼື ບ້ານ:</strong>
+                <p className="font-TimesNewRoman line-clamp-2">{companyOrVillage}</p>
+              </div>
+
+              <div className="mb-4">
+                <strong>ເພດ:</strong>
+                <p className="font-TimesNewRoman">{genderDisplay}</p>
+              </div>
+
+              <div className="mb-4">
+                <strong>ວັນທີ່ສ້າງ:</strong>
+                <p className="font-TimesNewRoman">{createdAtDisplay}</p>
+              </div>
+            </section>
+          </main>
+        </CardContent>
+
+        <style jsx>{`
+          @media print {
+            @page {
+              size: A4;
+              margin: 20mm;
+            }
+            .print\\:a4-container {
+              width: 210mm !important;
+              min-height: 297mm !important;
+              box-shadow: none !important;
+              margin: 0 auto !important;
+              border: none !important;
+              border-radius: 0 !important;
+            }
+          }
+        `}</style>
+      </Card>
+    );
+  },
+);
+
+StayPermitCard.displayName = 'StayPermitCard'; // เพิ่ม displayName เพื่อช่วยในการ debug
