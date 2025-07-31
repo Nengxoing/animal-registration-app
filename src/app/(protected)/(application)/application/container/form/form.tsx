@@ -98,7 +98,7 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ form, onSubmit, profi
               <Form.Field name="folderId" control={form.control} label="ເລືອກແຟ້ມ">
                 <Form.Input.Combobox placeholder="ແຟ້ມ" className="w-96" options={folderOptions} />
               </Form.Field>
-              <Form.Field name="numberId" control={form.control} label={`ເລືອກຟອມເລກທີ(ຈໍານວນ ${count} ເລກທີ)`} >
+              <Form.Field name="numberId" control={form.control} label={`ເລືອກຟອມເລກທີ (ຈໍານວນ ${count} ເລກທີ)`} >
                 <Form.Input.Combobox placeholder="ຟອມເລກທິ" className="w-96" options={numberOptions} />
               </Form.Field>
             </div>

@@ -11,8 +11,6 @@ interface BlacklistProfileFormProps {
   onSubmit: (data: z.infer<typeof checkBlacklistFormSchema>) => Promise<void>;
 }
 
-
-
 const BlacklistProfileForm: React.FC<BlacklistProfileFormProps> = ({ form, onSubmit }) => {
   const { errors } = form.formState;
   useUpdateDefaultValues({ form, fieldName: "identityType", value: "nationalId", shouldUpdate: true });

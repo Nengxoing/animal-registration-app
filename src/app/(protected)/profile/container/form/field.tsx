@@ -16,6 +16,12 @@ const genderOptions = [
   { value: "ເພດແມ່", label: "ເພດແມ່" },
 ];
 
+const animalId = [ 
+  { value: "3107250001", label: "3107250001" },
+  { value: "3107250002", label: "3107250002" },
+  { value: "3107250003", label: "3107250003" },
+]
+
 export const PersonalInfoSection: React.FC<IFormProps & { 
   disabled?: boolean,
 }> = ({ form, disabled }) => {
@@ -25,37 +31,37 @@ export const PersonalInfoSection: React.FC<IFormProps & {
       <h3 className="text-lg font-medium">ຂໍ້ມູນສ່ວນຕົວ</h3>
       <div className="grid gap-4 sm:grid-cols-1">
         <div className="grid gap-4 sm:grid-cols-3">
-          <Form.Field name="firstName" control={form.control} required={false} label="ຊື່ແທ້" >
-            <Form.Input.Input placeholder="ປ້ອນຊື່" onKeyDown={handleEnterFocusNext} />
-          </Form.Field>
-          <Form.Field name="lastName" control={form.control} required={false} label="ນາມສະກຸນ" >
-            <Form.Input.Input placeholder="ປ້ອນນາມສະກຸນ" onKeyDown={handleEnterFocusNext} />
+          <Form.Field name="firstName" control={form.control} label="ຊື່ແທ້" >
+            <Form.Input.Input placeholder="ປ້ອນຊື່" required onKeyDown={handleEnterFocusNext} />
           </Form.Field>
           
-          <Form.Field name="applicationNumber" control={form.control} label="ເລກທີໃບຄໍາຮ້ອງ" >
-            <Form.Input.Input placeholder="ເລກທີໃບຄໍາຮ້ອງ" onKeyDown={handleEnterFocusNext}/>
+          <Form.Field name="applicationNumber" control={form.control} label="ເລກທີແຟ້ມ" >
+            <Form.Input.Input placeholder="ປ້ອນເລກທີແຟ້ມ" required onKeyDown={handleEnterFocusNext}/>
+          </Form.Field>
+          
+          <Form.Field name="billItem" control={form.control} label="ເລືອກໄອດີສັດ">
+            <Form.Input.Select options={animalId} className='w-full' required onKeyDown={handleEnterFocusNext}/>
           </Form.Field>
           
           <Form.Field name="gender" control={form.control} label="ເພດ">
-            <Form.Input.Select options={genderOptions} className='w-full' onKeyDown={handleEnterFocusNext} defaultValue="MALE"/>
+            <Form.Input.Select options={genderOptions} className='w-full' required onKeyDown={handleEnterFocusNext} defaultValue="MALE"/>
           </Form.Field>
           
           <Form.Field name="weight" control={form.control} label="ນ້ຳໜັກ" >
-            <Form.Input.Input placeholder="ນ້ຳໜັກ kg" onKeyDown={handleEnterFocusNext}/>
+            <Form.Input.Input placeholder="ນ້ຳໜັກ kg" required onKeyDown={handleEnterFocusNext}/>
           </Form.Field>
           
           <Form.Field name="height" control={form.control} label="ລວງສູງ" >
-            <Form.Input.Input placeholder="ລວງສູງ cm" onKeyDown={handleEnterFocusNext}/>
+            <Form.Input.Input placeholder="ລວງສູງ cm" required onKeyDown={handleEnterFocusNext}/>
           </Form.Field>
           
           <Form.Field name="breed" control={form.control} label="ສາຍພັນ" >
-            <Form.Input.Input placeholder="ສາຍພັນ" onKeyDown={handleEnterFocusNext}/>
+            <Form.Input.Input placeholder="ສາຍພັນ" required onKeyDown={handleEnterFocusNext}/>
           </Form.Field>
           
           <Form.Field name="age" control={form.control} label="ອາຍຸ" >
-            <Form.Input.Input placeholder="ອາຍຸ" onKeyDown={handleEnterFocusNext}/>
+            <Form.Input.Input placeholder="ອາຍຸ" required onKeyDown={handleEnterFocusNext}/>
           </Form.Field>
-          
           
         </div>
         

@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 "use client";
 import { LayoutGrid, TableProperties } from "lucide-react";
 import { useEffect } from "react";
@@ -16,7 +17,7 @@ import { BlacklistTable } from "../blacklist/table";
 
 export default function UserPage() {
   return (
-    <div className="pl-4 space-y-2">
+    <div className="pl-4 space-y-2"> 
       <div className="flex justify-between items-center">
         <TitleLabel title='ຄຸ້ມຄອງສັດ' subtitle='ນີ້ແມ່ນລາຍການຂໍ້ມູນລົງທະບຽນສັດ 10-50 ລາຍການຫຼ້າສຸດ' />
         <CreateButton resouce="profile" title='ລົງທະບຽນສັດ' />

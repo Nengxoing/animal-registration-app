@@ -8,7 +8,6 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
 import { type IBlacklist, type IBlacklistColumns } from "./type";
 
-
 const FullNameCell = ({ row }: { row: IBlacklistColumns["row"] }) => {
   const company = row.original?.company;
   return <span>{`${company?.name }`}</span>;
@@ -42,8 +41,6 @@ const ReasonCell = ({ row }: IBlacklistColumns) => {
   );
 };
 
-
-
 export const columnsBlacklistCompany: Array<ColumnDef<IBlacklist>> = [
   {
     id: "select",
@@ -52,38 +49,38 @@ export const columnsBlacklistCompany: Array<ColumnDef<IBlacklist>> = [
     enableSorting: false,
     enableHiding: false,
   },
- {
-  header: "ຊື່ ບໍລິສັດ",
-  accessorKey: "company.name", // or use custom cell if needed
-  cell: ({ row }) => <span>{row.original.company?.name || "-"}</span>,
-},
-{
-  header: "ເຫດຜົນ",
-  accessorKey: "reason",
-  cell: ({ row }) => <ReasonCell row={row} />,
-},
-{
-  header: "ລະຫັດທຸລະກິດ", // businessCode
-  cell: ({ row }) => <span>{row.original.company?.businessCode || "-"}</span>,
-},
-{
-  header: "ປະເພດທຸລະກິດ", // businessType
-  cell: ({ row }) => <span>{row.original.company?.businessType || "-"}</span>,
-},
-{
-  header: "ວັນທີຂື້ນບັນຊີດໍາ",
-  accessorKey: "updatedAt",
-  cell: ({ row }) => {
-    const date = row.original.updatedAt;
-    return <span>{formatDate({ date })}</span>;
+  {
+    header: "ຊື່ ບໍລິສັດ",
+    accessorKey: "company.name", // or use custom cell if needed
+    cell: ({ row }) => <span>{row.original.company?.name || "-"}</span>,
   },
-},
-{
-  header: "",
-  accessorKey: "id",
-  cell: ({ row }) => {
-    return <DataTableRowActions rowId={row.original.id} resource="company" />;
+  {
+    header: "ເຫດຜົນ",
+    accessorKey: "reason",
+    cell: ({ row }) => <ReasonCell row={row} />,
   },
-},
+  {
+    header: "ລະຫັດທຸລະກິດ", // businessCode
+    cell: ({ row }) => <span>{row.original.company?.businessCode || "-"}</span>,
+  },
+  {
+    header: "ປະເພດທຸລະກິດ", // businessType
+    cell: ({ row }) => <span>{row.original.company?.businessType || "-"}</span>,
+  },
+  {
+    header: "ວັນທີຂື້ນບັນຊີດໍາ",
+    accessorKey: "updatedAt",
+    cell: ({ row }) => {
+      const date = row.original.updatedAt;
+      return <span>{formatDate({ date })}</span>;
+    },
+  },
+  {
+    header: "",
+    accessorKey: "id",
+    cell: ({ row }) => {
+      return <DataTableRowActions rowId={row.original.id} resource="company" />;
+    },
+  },
 
 ];

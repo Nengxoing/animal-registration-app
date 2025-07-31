@@ -16,23 +16,21 @@ const extractApplicationFileIds = (applicationFile: Array<{ id?: number }>) => {
 };
 
 export const profileFormSchema = z.object({
+
   image: validateImageSchema({
     required: false,
     message: "ກະລຸນາເລືອກຮູບພາບ",
   }).or(z.string()),
+
   oldImage: validateImageSchema({
     required: false,
     message: "ກະລຸນາເລືອກຮູບພາບ",
   }).or(z.string()),
-  firstName: z
-  .string()
-  .optional()
-  .nullable(),
 
-lastName: z
-  .string()
-  .optional()
-  .nullable(),
+  firstName: z
+    .string()
+    .optional()
+    .nullable(),
 
   gender: z.string().min(1, { message: "ກະລຸນາລະບຸເພດ" }),
   weight: z.string().min(1, { message: "ນ້ຳໜັກຕ້ອງເປັນເລກ" }).optional(),
@@ -71,7 +69,6 @@ lastName: z
 });
 export const defaultValues = {
   firstName: "",
-  lastName: "",
   phoneNumber: "",
   dateOfBirth: "",
   gender: "",

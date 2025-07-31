@@ -37,9 +37,9 @@ const fetchProfile = async ({
     excludeApplications,
   };
 
-  if (genderFilter) params.gender = genderFilter;
-  if (yearFilter) params.year = yearFilter;
-  if (dateFilter) params.date = dateFilter;
+  if (genderFilter) { params.gender = genderFilter; }
+  if (yearFilter) { params.year = yearFilter; }
+  if (dateFilter) { params.date = dateFilter; }
 
   const response = await apiClient.get<IProfileResponse>("/profile", { params });
 
@@ -49,8 +49,7 @@ const fetchProfile = async ({
   return response; // ✅ important!
 };
 
-
-const useProfileTable = ({ excludeApplications = false}: { excludeApplications?: boolean}) => {
+const useProfileTable = ({ excludeApplications = false }: { excludeApplications?: boolean}) => {
   const { page, limit, updatePagination, resetPage } = usePaginationStore();
   const { search, updateSearch } = useSearchStore();
   const [genderFilter, setGenderFilter] = useState<string>("");

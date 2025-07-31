@@ -12,8 +12,9 @@ import { Button } from '@/components/ui';
 import { RoleBasedGuard } from "@/lib/ability/roleBasedGuard";
 import { useSession } from "next-auth/react";
 import { IProfileGallery } from "src/app/(protected)/(image)/profileGallery/type";
+
 const FullNameCell = ({ row }: IProfileColumns) => (
-  <span>{`${row.original?.firstName} ${row.original?.lastName}`}</span>
+  <span>{`${row.original?.firstName}`}</span>
 );
 
 const WeightCell = ({ row }: IProfileColumns) => {
@@ -94,7 +95,7 @@ const userRole = () => {
 export const columnsProfile: Array<ColumnDef<IProfile>> = [
   {
     accessorKey: "image",
-    header: "ຮູບ ໃຫມ່​",
+    header: "ຮູບໃຫມ່​",
     cell: ({ row }) => {
       const profileGallery = row.original?.profileGallery as object as IProfileGallery[] || [];
       return(
@@ -112,12 +113,12 @@ export const columnsProfile: Array<ColumnDef<IProfile>> = [
   },
   {
     accessorKey: "oldImage",
-    header: "ຮູບ ເກົ່າ",
+    header: "ຮູບເກົ່າ",
     cell: ({ row }) => <ImageViewer src={row.original?.oldImage} className="my-1 h-14 w-14" />,
   },
   {
     accessorKey: "firstName",
-    header: "ຊື່ ແລະ ນາມສະກຸນ",
+    header: "ຊື່",
     cell: ({ row }) => <FullNameCell row={row} />,
   },
   {

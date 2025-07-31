@@ -28,7 +28,7 @@ const fetchFolder = async ({ paginate, status, officeId }: {
   });
   return response;
 };
-
+ 
 const useFolderCombobox = ({ status, officeId }: { status?: ProcessStatus, officeId?: number }) => {
   const paginate = false;
   const query = useQuery<IFolderResponse, Error>({
@@ -51,7 +51,7 @@ function useComboboxMapping<T extends { id: string | number; name: string; no?: 
   folderData: T[],
 ): Array<{ label: string; value: string | number; }> {
   return folderData.map((item, index: number) => ({
-    label: `${index + 1}. ແຟ້ມ ${item.code} - ຊື້ແຟ້ມ ${item.name}`,
+    label: `${index + 1}. ${item.name} - ${item.code}`,
     value: item.id,
   }));
 }

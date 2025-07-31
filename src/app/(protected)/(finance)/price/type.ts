@@ -8,7 +8,7 @@ export interface IPrice {
     type: string;
     createdAt: string;
     updatedAt: string;
-    duration: String;
+    duration: string;
 }
 export interface IPriceColumns {
     row: {
